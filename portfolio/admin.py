@@ -95,16 +95,15 @@ def viewMap(request):
     users = User.objects.all()
     all_users = []
     for user in users:
-        if user.location != None:
-            if user.location.location:
-                user_details = [
-                    user.username,
-                    user.location.location.coords[0],
-                    user.location.location.coords[1],
-                    int(user.phone_number) if user.phone_number else '',
-                    user.home_address,
-                ]
-                all_users.append(user_details)
+        if user.location is not None:
+            user_details = [
+                user.username,
+                user.location.location.coords[0],
+                user.location.location.coords[1],
+                int(user.phone_number) if user.phone_number else '',
+                user.home_address,
+            ]
+            all_users.append(user_details)
     context = {"users": json.dumps(all_users)}
     return render(request, template_name, context)
 
